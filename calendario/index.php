@@ -24,11 +24,11 @@ class Full_Calendar
 		/**
 		 * register style, script
 		 */
-		add_action('admin_post_create_full_calendar', array($this, 'create'));
+		// add_action('admin_post_create_full_calendar', array($this, 'create'));
 
-		add_action('admin_post_update_full_calendar', array($this, 'update'));
+		// add_action('admin_post_update_full_calendar', array($this, 'update'));
 
-		add_action('admin_post_delete_full_calendar', array($this, 'delete'));
+		// add_action('admin_post_delete_full_calendar', array($this, 'delete'));
 
 
 		add_shortcode('full_calendar', array($this, 'code'));
@@ -65,75 +65,90 @@ class Full_Calendar
 
 	public function scripts()
 	{
-		wp_register_script( 'js','/wp-content/plugins/calendario/fullcalendar/main.js' );
+		 
+		wp_enqueue_script( 'js','/wp-content/plugins/calendario/fullcalendar/main.js' );
+
+		
+
+		
 
         wp_enqueue_style( 'full-css', '/wp-content/plugins/calendario/fullcalendar/main.css' );
+     
        
         
 	}
 
 
 
-public function create()
-	{
-		global $wpdb;
-		/**
-		 * global $wpdb;
-		 * I will use wordpress database
-		 */
+// public function create()
+// 	{
+// 		global $wpdb;
+// 		/**
+// 		 * global $wpdb;
+// 		 * I will use wordpress database
+// 		 */
 
-		$wpdb->query($wpdb->prepare(
-			"INSERT INTO wp_full_calenadar (title) VALUES (%s)",
-			$_POST['title']
-		));
+// 		$wpdb->query($wpdb->prepare(
+// 			"INSERT INTO wp_full_calenadar (title) VALUES (%s)",
+// 			$_POST['title']
+// 		));
 
-		wp_redirect(wp_get_referer());
-		/**
-		 * redirect to the previous page
-		 */
-	}
+// 		wp_redirect(wp_get_referer());
+// 		/**
+// 		 * redirect to the previous page
+// 		 */
+// 	}
 
-	public function update()
-	{
-		global $wpdb;
+// 	public function update()
+// 	{
+// 		global $wpdb;
 
-		$wpdb->query($wpdb->prepare(
-			"UPDATE wp_full_calenadar SET title = %s WHERE id = %s",
-			$_POST['title'], $_POST['id']
-		));
+// 		$wpdb->query($wpdb->prepare(
+// 			"UPDATE wp_full_calenadar SET title = %s WHERE id = %s",
+// 			$_POST['title'], $_POST['id']
+// 		));
 
-		wp_redirect(wp_get_referer());
-	}
+// 		wp_redirect(wp_get_referer());
+// 	}
 
-	public function delete()
-	{
-		global $wpdb;
+// 	public function delete()
+// 	{
+// 		global $wpdb;
 
-		$wpdb->query($wpdb->prepare(
-			"DELETE FROM wp_full_calenadar WHERE id = %s",
-			$_GET['id']
-		));
+// 		$wpdb->query($wpdb->prepare(
+// 			"DELETE FROM wp_full_calenadar WHERE id = %s",
+// 			$_GET['id']
+// 		));
 
-		wp_redirect(wp_get_referer());
-	}
+// 		wp_redirect(wp_get_referer());
+// 	}
+
+
 
 	public function view()
 	{
+		// global $wpdb;
+
+		// $calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
 		global $wpdb;
 
-		$calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
+		// $calendars=$wpdb->get_results("SELECT * FROM wp_posts WHERE post_type = wpcf7_contact_form");
+		// $calendars = $wpdb->get_results( $wpdb->prepare( "SELECT post_date, post_title FROM $wpdb->posts WHERE post_type = 'wpcf7_contact_form'"));
+		$calendars = $wpdb->get_results( $wpdb->prepare( "SELECT post_content, post_title FROM $wpdb->posts WHERE post_type = 'calendario'"));
+	
+		echo($calendars);
 
 		include 'view.php';
 	}
 
-	public function code()
-	{
-		global $wpdb;
+	// public function code()
+	// {
+	// 	global $wpdb;
 
-		$calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
-		
-		include 'code.php';
-	}
+	// 	// $calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
+	// 	$calendars=$wpdb->get_results("SELECT * FROM wp_posts WHERE post_type = wpcf7_contact_form");
+	// 	include 'code.php';
+	// }
 }
 
-$fullCalendar = new Full_calendar();
+$fullCalendar = new Full_Calendar();
