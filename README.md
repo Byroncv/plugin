@@ -1,7 +1,7 @@
 # plugin
 codigo de full calendar
 this plugin requires a custom post type to work
-<!--  	register_post_type('agendar', 
+register_post_type('agendar', 
 		array(
 			//Visibilidad en la plataforma
 			'public' => true,
@@ -27,4 +27,4 @@ this plugin requires a custom post type to work
 
 }
   //inicializar e registro 
-add_action('init', 'agendar');-->
+add_action('init', 'agendar');
