@@ -10,8 +10,6 @@ class Full_Calendar
 	public function __construct()
 	{
 		/**
-		 * add_action(string $tag, collable $function_to_add)
-		 *
 		 * Hooks a function on to a specific action.
 		 */
 
@@ -21,46 +19,23 @@ class Full_Calendar
 		 */
 
 		add_action('admin_enqueue_scripts', array($this, 'scripts'));
-		/**
-		 * register style, script
-		 */
-		// add_action('admin_post_create_full_calendar', array($this, 'create'));
-
-		// add_action('admin_post_update_full_calendar', array($this, 'update'));
-
-		// add_action('admin_post_delete_full_calendar', array($this, 'delete'));
-
-
+		
 		add_shortcode('full_calendar', array($this, 'code'));
-		/**
-		 * add_shortcode(string $tag, callable $function);
-		 */
+
 
 	}
 
 	public function register_menu()
 	{
 		add_menu_page(
-			'Full_Calendar',
-			'Full_Calendar',
+			'Calendario',
+			'Calendario',
 			0,
 			'Full_Calendar_Overview',
 			array($this, 'view'),
 			'dashicons-editor-ul'
 		);
-		/**
-		 * add menu
-		 * 
-		 * add_menu_page(
-		 * 		string $page_title,
-		 * 		string $menu_title,
-		 * 		string $capability,
-		 * 		string $menu_slug,
-		 * 		callable $function,
-		 * 		string $icon_url
-		 * 		int $position
-		 * );
-		 */
+		
 	}
 
 	public function scripts()
@@ -80,75 +55,20 @@ class Full_Calendar
 
 
 
-// public function create()
-// 	{
-// 		global $wpdb;
-// 		/**
-// 		 * global $wpdb;
-// 		 * I will use wordpress database
-// 		 */
 
-// 		$wpdb->query($wpdb->prepare(
-// 			"INSERT INTO wp_full_calenadar (title) VALUES (%s)",
-// 			$_POST['title']
-// 		));
-
-// 		wp_redirect(wp_get_referer());
-// 		/**
-// 		 * redirect to the previous page
-// 		 */
-// 	}
-
-// 	public function update()
-// 	{
-// 		global $wpdb;
-
-// 		$wpdb->query($wpdb->prepare(
-// 			"UPDATE wp_full_calenadar SET title = %s WHERE id = %s",
-// 			$_POST['title'], $_POST['id']
-// 		));
-
-// 		wp_redirect(wp_get_referer());
-// 	}
-
-// 	public function delete()
-// 	{
-// 		global $wpdb;
-
-// 		$wpdb->query($wpdb->prepare(
-// 			"DELETE FROM wp_full_calenadar WHERE id = %s",
-// 			$_GET['id']
-// 		));
-
-// 		wp_redirect(wp_get_referer());
-// 	}
-
-
-
+	 
 	public function view()
 	{
-		// global $wpdb;
-
-		// $calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
+		
 		global $wpdb;
 
-		// $calendars=$wpdb->get_results("SELECT * FROM wp_posts WHERE post_type = wpcf7_contact_form");
-		// $calendars = $wpdb->get_results( $wpdb->prepare( "SELECT post_date, post_title FROM $wpdb->posts WHERE post_type = 'wpcf7_contact_form'"));
-		$calendars = $wpdb->get_results( $wpdb->prepare( "SELECT post_content, post_title FROM $wpdb->posts WHERE post_type = 'calendario'"));
 	
-		echo($calendars);
+		$calendars = $wpdb->get_results( $wpdb->prepare( "SELECT post_content,post_date, post_title, post_status FROM $wpdb->posts WHERE post_type = 'agendar'"));
+	
+		
 
 		include 'view.php';
 	}
-
-	// public function code()
-	// {
-	// 	global $wpdb;
-
-	// 	// $calendars = $wpdb->get_results("SELECT * FROM wp_full_calenadar");
-	// 	$calendars=$wpdb->get_results("SELECT * FROM wp_posts WHERE post_type = wpcf7_contact_form");
-	// 	include 'code.php';
-	// }
 }
 
 $fullCalendar = new Full_Calendar();
